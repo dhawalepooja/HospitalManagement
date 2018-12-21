@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+
+  <body ng-app="hospitalApp" ng-controller="hospitalsCtrl">
+    <h1>Hospital List</h1>
+    <br>
+    <button>Sort by Hospital Name</button>
+    
+    <div ng-view></div>
+    
+    <script>
+    var app = angular.module("hospitalApp", ["ngRoute"]);
+    
+    app.config(function($routeProvider) {
+    $routeProvider
+    .when("/hospitals", {
+        templateUrl : "hospital-view.component.htm",
+    })
+    .when("/deaprtments", {
+        templateUrl : "department-view.component.htm",
+    });
+    });
+    
+    app.controller('hospitalsCtrl', function($scope, $http) {
+    $http.get("hospital.service.ts")
+    .then(function (response) {$scope.hospitals = response.data.Hospitals;});
+    });
+    
+    </script>
+    
+  </body>
+</html>
